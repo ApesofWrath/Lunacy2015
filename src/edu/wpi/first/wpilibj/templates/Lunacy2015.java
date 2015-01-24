@@ -21,80 +21,98 @@ import edu.wpi.first.wpilibj.Joystick;
 public class Lunacy2015 extends SimpleRobot {
 
     //Declaring Motors
-    Victor driveMotorLeft = new Victor(1);//REMEMBER TO CHECK THIS
-    Victor driveMotorRight = new Victor(2);//REMEMBER TO CHECK THIS
+    Victor driveMotorLeft = new Victor(2);
+    Victor driveMotorRight = new Victor(1);
     Victor motorTop = new Victor(4);
     Victor motorBottom = new Victor(3);
 
     //Declaring Joystick/Gamepad
     Joystick joyGamepad = new Joystick(1);
 
-    //Deploying RobotDrive and the Bolleans we will need for it
+    //Deploying RobotDrive and the booleans we will need for it
     RobotDrive rd = new RobotDrive(driveMotorLeft, driveMotorRight);
     boolean isTankDrive = true;
     boolean isIntake = true;
+    boolean isOff = true;
 
     
     public void operatorControl() {
-
+        System.out.println("Operator");
         //Current Controls
         
         /*General:
-            Button 8(Start) switches Drive mode from Arcade to Tank
-            Button 7(Select) switches Intake on and off
+        *   Button 8(Start) switches Drive mode from Arcade to Tank
+        *   Button 7(Select) switches Intake on and off
         */
         
         /*Arcade:
-            .
-        
-        
+        *    .
+        *
+        *
         */
         
         /*Tank:
-            .
-            
-            
+        *   .
+        *  
+        *   
         */
         
         // Drive Code Bit Start
         
-        if (isTankDrive) {// The drive parameters are either perfect or completely wrong.
-            rd.tankDrive(joyGamepad, 2, joyGamepad, 5);
-            if (joyGamepad.getRawButton(8)) {
-                isTankDrive = false;
+        while(true) {
+            if (isTankDrive) {// The drive parameters are either perfect or completely wrong.
+                rd.tankDrive(joyGamepad, 2, joyGamepad, 5);
+                if (joyGamepad.getRawButton(8)) {
+                    isTankDrive = false;
+                }
             }
-        }
-        
-        if (!isTankDrive) {
-            rd.arcadeDrive(joyGamepad, 2, joyGamepad, 5);
-            if (joyGamepad.getRawButton(8)) {
-                isTankDrive = true;
+
+            if (!isTankDrive) {
+                rd.arcadeDrive(joyGamepad, 1, joyGamepad, 2);
+                if (joyGamepad.getRawButton(8)) {
+                    isTankDrive = true;
+                }
             }
         }
         
         // Drive Code Bit End
-
-        //Because the bottom never changes state its set to 0.5 and is never set to change.
-        motorBottom.set(0.5);//might have to make this negative, depending on how the motor is placed.
         
-        
+        /*
         // Intake Code Bit Start
-        if (isIntake) {//might have to make the values negative.
+        if (isIntake && !isOff) {//might have to make the values negative.
+            motorBottom.set(0.5);
             motorTop.set(0.5);
             if (joyGamepad.getRawButton(7)) {
                 isIntake = false;
             }
+            if (joyGamepad.getRawButton(1)){
+                isOff = true;
+            }
         }
 
-        if (!isIntake) {//might have to make the values negative.
+        if (!isIntake && !isOff) {//might have to make the values negative.
+            motorBottom.set(0.5);
             motorTop.set(-0.5);
             if (joyGamepad.getRawButton(7)) {
                 isIntake = true;
             }
+            if (joyGamepad.getRawButton(1)){
+                isOff = true;
+            }
+        }
             
+        if (isOff){
+            motorTop.set(0.0);
+            motorBottom.set(0.0);
+            if(joyGamepad.getRawButton(1)){
+               isOff = false;
+           }
+        }
+                */
+           
         }
         //Intake Code Bit End
         
     }
 
-}
+
