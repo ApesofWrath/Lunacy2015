@@ -35,31 +35,33 @@ public class Lunacy2015 extends SimpleRobot {
     boolean isIntake = true;
     boolean isOff = true;
 
-    
     public void operatorControl() {
         System.out.println("Operator");
+        System.out.println("Version 1/24 12:55 PM");
         //Current Controls
-        
+
         /*General:
-        *   Button 8(Start) switches Drive mode from Arcade to Tank
-        *   Button 7(Select) switches Intake on and off
-        */
-        
+         *   Button 8(Start) switches Drive mode from Arcade to Tank
+         *   Button 7(Select) switches Intake on and off
+         */
         /*Arcade:
-        *    .
-        *
-        *
-        */
-        
+         *    .
+         *
+         *
+         */
         /*Tank:
-        *   .
-        *  
-        *   
-        */
-        
+         *   .
+         *  
+         *   
+         */
         // Drive Code Bit Start
-        
-        while(true) {
+        while (isEnabled() && isOperatorControl()) { // TESTING VERSION
+            rd.tankDrive(joyGamepad, joyGamepad);
+            //rd.tankDrive(joyGamepad, 2, joyGamepad, 5);
+        }
+
+        /* OLD VERSION
+        while (isEnabled() && isOperatorControl()) {
             if (isTankDrive) {// The drive parameters are either perfect or completely wrong.
                 rd.tankDrive(joyGamepad, 2, joyGamepad, 5);
                 if (joyGamepad.getRawButton(8)) {
@@ -73,46 +75,74 @@ public class Lunacy2015 extends SimpleRobot {
                     isTankDrive = true;
                 }
             }
-        }
-        
-        // Drive Code Bit End
-        
-        /*
-        // Intake Code Bit Start
-        if (isIntake && !isOff) {//might have to make the values negative.
-            motorBottom.set(0.5);
-            motorTop.set(0.5);
-            if (joyGamepad.getRawButton(7)) {
-                isIntake = false;
-            }
-            if (joyGamepad.getRawButton(1)){
-                isOff = true;
-            }
-        }
 
-        if (!isIntake && !isOff) {//might have to make the values negative.
-            motorBottom.set(0.5);
-            motorTop.set(-0.5);
-            if (joyGamepad.getRawButton(7)) {
-                isIntake = true;
+            // Intake Code Bit Start
+            if (isIntake && !isOff) {//might have to make the values negative.
+                motorBottom.set(0.5);
+                motorTop.set(0.5);
+                if (joyGamepad.getRawButton(7)) {
+                    isIntake = false;
+                }
+                if (joyGamepad.getRawButton(1)) {
+                    isOff = true;
+                }
             }
-            if (joyGamepad.getRawButton(1)){
-                isOff = true;
+
+            if (!isIntake && !isOff) {//might have to make the values negative.
+                motorBottom.set(0.5);
+                motorTop.set(-0.5);
+                if (joyGamepad.getRawButton(7)) {
+                    isIntake = true;
+                }
+                if (joyGamepad.getRawButton(1)) {
+                    isOff = true;
+                }
             }
+
+            if (isOff) {
+                motorTop.set(0.0);
+                motorBottom.set(0.0);
+                if (joyGamepad.getRawButton(1)) {
+                    isOff = false;
+                }
+            }
+
         }
+          */
+                // Drive Code Bit End
+                /*
+                 // Intake Code Bit Start
+                 if (isIntake && !isOff) {//might have to make the values negative.
+                 motorBottom.set(0.5);
+                 motorTop.set(0.5);
+                 if (joyGamepad.getRawButton(7)) {
+                 isIntake = false;
+                 }
+                 if (joyGamepad.getRawButton(1)){
+                 isOff = true;
+                 }
+                 }
+
+                 if (!isIntake && !isOff) {//might have to make the values negative.
+                 motorBottom.set(0.5);
+                 motorTop.set(-0.5);
+                 if (joyGamepad.getRawButton(7)) {
+                 isIntake = true;
+                 }
+                 if (joyGamepad.getRawButton(1)){
+                 isOff = true;
+                 }
+                 }
             
-        if (isOff){
-            motorTop.set(0.0);
-            motorBottom.set(0.0);
-            if(joyGamepad.getRawButton(1)){
-               isOff = false;
-           }
-        }
-                */
-           
-        }
-        //Intake Code Bit End
-        
+                 if (isOff){
+                 motorTop.set(0.0);
+                 motorBottom.set(0.0);
+                 if(joyGamepad.getRawButton(1)){
+                 isOff = false;
+                 }
+                 }
+                 */
     }
+    //Intake Code Bit End
 
-
+}
