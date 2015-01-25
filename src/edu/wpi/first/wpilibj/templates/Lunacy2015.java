@@ -52,57 +52,43 @@ public class Lunacy2015 extends SimpleRobot {
         //Current Controls
 
         /*General:
-         *   Button 8(Start) switches Drive mode from Arcade to Tank
-         *   Button 7(Select) switches Intake on and off
+            Button 8(Start) switches Drive mode from Arcade to Tank
+            Button 7(Select) switches Intake on and off
          */
-        /*Arcade:
-         *    .
-         *
-         *
-         */
-        /*Tank:
-         *   .
-         *  
-         *   
-         */
+       
         // Drive Code Bit Start
-        /*while (isEnabled() && isOperatorControl()) { // TESTING VERSION
-         driveMotorLeft.set(0.5);
-         driveMotorRight.set(-0.5);
-         //rd.tankDrive(joyGamepad, 2, joyGamepad, 5, false);
-         //rd.tankDrive(joyGamepad, 2, joyGamepad, 5);
-         }*/
+
         while (isEnabled() && isOperatorControl()) {
             System.out.println("Enabled and Operator Controlled");
+
             if (joyGamepad.getRawButton(ARCADE_MODE_ENABLED)) {
-                    isTankDrive = false;
-                    System.out.println("Tank:" + isTankDrive);
-                }
-            
+                isTankDrive = false;
+                System.out.println("Tank:" + isTankDrive);
+            }
+
             if (joyGamepad.getRawButton(TANK_MODE_ENABLED)) {
-                    isTankDrive = true;
-                    System.out.println("Tank:" + isTankDrive);
-                }
-            
-            if (isTankDrive) {// The drive parameters are either perfect or completely wrong.
-//                rd.tankDrive(joyGamepad, 2, joyGamepad, 5);
+                isTankDrive = true;
+                System.out.println("Tank:" + isTankDrive);
+            }
+
+            if (isTankDrive) {
+
+                driveMotorLeft.set(-joyGamepad.getY());
+                driveMotorRight.set(joyGamepad.getRawAxis(5));
+
                 System.out.println("TANK");
-                rd.tankDrive(-joyGamepad.getY(GenericHID.Hand.kLeft), -joyGamepad.getY(GenericHID.Hand.kRight));
-                // TANK MODE APPEARS TO STILL RUN ON ARCADE
+
             }
 
             if (!isTankDrive) {
                 System.out.println("ARCADE");
-//                rd.arcadeDrive(joyGamepad, 2, joyGamepad, 1);
-                rd.arcadeDrive(-joyGamepad.getY(GenericHID.Hand.kLeft), -joyGamepad.getY(GenericHID.Hand.kRight));
+                rd.arcadeDrive(-joyGamepad.getY(GenericHID.Hand.kLeft), -joyGamepad.getX(GenericHID.Hand.kLeft));
             }
 
             //max is a robot
             //max is the only robot that is bad at math
-            
             // Drive Code Bit End
             // Intake Code Bit Start
-            
             if (joyGamepad.getRawButton(OUTPUT_MODE_ENABLED)) {
                 isIntake = false;
                 System.out.println("Intake: " + isIntake);
@@ -112,15 +98,15 @@ public class Lunacy2015 extends SimpleRobot {
                 isIntake = true;
                 System.out.println("Intake: " + isIntake);
             }
-            
+
             if (joyGamepad.getRawButton(BALL_SYSTEM_DISABLED)) {
-                    isOff = true;
-                    System.out.println("Off: " + isOff);
+                isOff = true;
+                System.out.println("Off: " + isOff);
             }
-            
+
             if (joyGamepad.getRawButton(BALL_SYSTEM_ENABLED)) {
-                    isOff = false;
-                    System.out.println("Off: " + isOff);
+                isOff = false;
+                System.out.println("Off: " + isOff);
             }
 
             if (isIntake && !isOff) { //might have to make the values negative
@@ -140,13 +126,9 @@ public class Lunacy2015 extends SimpleRobot {
                 motorTop.set(0.0);
                 motorBottom.set(0.0);
             }
-        
-            
-            
-            
+
+        }
+        //Intake Code Bit End
 
     }
-    //Intake Code Bit End
-
-}
 }
