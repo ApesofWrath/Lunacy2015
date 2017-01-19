@@ -1,4 +1,4 @@
-/*----------------------------------------------------------------------------*/
+ /*----------------------------------------------------------------------------*/
 /* Copyright (c) FIRST 2008. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
@@ -30,9 +30,9 @@ public class Lunacy2015 extends SimpleRobot {
     //Declaring Joystick/Gamepad
     Joystick joyGamepad = new Joystick(1);
 
-    private final int INTAKE_MODE_ENABLED = 1;
-    private final int OUTPUT_MODE_ENABLED = 2;
-    private final int TANK_MODE_ENABLED = 3;
+    private final int INTAKE_MODE_ENABLED = 2;
+    private final int OUTPUT_MODE_ENABLED = 3;
+    private final int TANK_MODE_ENABLED = 1;
     private final int ARCADE_MODE_ENABLED = 4;
     private final int BALL_SYSTEM_DISABLED = 7;
     private final int BALL_SYSTEM_ENABLED = 8;
@@ -59,70 +59,62 @@ public class Lunacy2015 extends SimpleRobot {
         // Drive Code Bit Start
 
         while (isEnabled() && isOperatorControl()) {
-            System.out.println("Enabled and Operator Controlled");
 
             if (joyGamepad.getRawButton(ARCADE_MODE_ENABLED)) {
                 isTankDrive = false;
-                System.out.println("Tank:" + isTankDrive);
+                System.out.println("ARCADE ENABLED");
             }
 
             if (joyGamepad.getRawButton(TANK_MODE_ENABLED)) {
                 isTankDrive = true;
-                System.out.println("Tank:" + isTankDrive);
+                System.out.println("TANK ENABLED");
             }
 
             if (isTankDrive) {
 
-                driveMotorLeft.set(-joyGamepad.getY());
-                driveMotorRight.set(joyGamepad.getRawAxis(5));
-
-                System.out.println("TANK");
+                driveMotorLeft.set(-joyGamepad.getRawAxis(2));
+                driveMotorRight.set(joyGamepad.getRawAxis(4));
 
             }
 
             if (!isTankDrive) {
-                System.out.println("ARCADE");
                 rd.arcadeDrive(-joyGamepad.getY(GenericHID.Hand.kLeft), -joyGamepad.getX(GenericHID.Hand.kLeft));
             }
 
-            //max is a robot
-            //max is the only robot that is bad at math
+
             // Drive Code Bit End
             // Intake Code Bit Start
             if (joyGamepad.getRawButton(OUTPUT_MODE_ENABLED)) {
                 isIntake = false;
-                System.out.println("Intake: " + isIntake);
+                System.out.println("Outputting");
             }
 
             if (joyGamepad.getRawButton(INTAKE_MODE_ENABLED)) {
                 isIntake = true;
-                System.out.println("Intake: " + isIntake);
+                System.out.println("Intaking");
             }
 
             if (joyGamepad.getRawButton(BALL_SYSTEM_DISABLED)) {
                 isOff = true;
-                System.out.println("Off: " + isOff);
+                System.out.println("Rollers off");
             }
 
             if (joyGamepad.getRawButton(BALL_SYSTEM_ENABLED)) {
                 isOff = false;
-                System.out.println("Off: " + isOff);
+                System.out.println("Rollers on");
             }
 
-            if (isIntake && !isOff) { //might have to make the values negative
-                System.out.println("Intake and Not Off");
-                motorBottom.set(0.5);
-                motorTop.set(0.5);
+            if (isIntake && !isOff) {
+                motorBottom.set(1.0);
+                motorTop.set(1.0); //change back to 1.0
             }
 
-            if (!isIntake && !isOff) {//might have to make the values negative.
-                System.out.println("Not Off and Not Intake");
-                motorBottom.set(0.5);
-                motorTop.set(-0.5);
+            if (!isIntake && !isOff) {
+                motorBottom.set(-1.0);
+                motorTop.set(1.0); //change back to 1.0
             }
 
             if (isOff) {
-                System.out.println("Is Off");
                 motorTop.set(0.0);
                 motorBottom.set(0.0);
             }
